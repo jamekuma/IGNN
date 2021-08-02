@@ -103,6 +103,10 @@ ENV/
 # PyCharm
 .idea
 
+# experiments
+/experiments/*
+/experiment/*
+
 # Checkpoints
 # ckpt/
 
