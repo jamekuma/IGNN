@@ -78,7 +78,7 @@ python runner.py \
         --weights './ckpt/IGNN_x[2/3/4].pth'\
         --scale [2/3/4]\
         --dataroot [dataset root]\
-        --testname [Set5, Set14, BSD100, Urban100, Manga109]\
+        --testname [Set5, Set14, BSDS100, Urban100, Manga109]\
         --out [output path]
 ```
 
@@ -128,3 +128,6 @@ We are glad to hear from you. If you have any questions, please feel free to con
 ## License
 
 This project is open sourced under MIT license.
+
+
+python runner.py --gpu 0 --phase 'train' --scale 4 --dataroot /data/xiongjianyu/datasets --out ./experiment

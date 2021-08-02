@@ -28,7 +28,7 @@ __C.CONST.SCALE                         = 4
 #
 __C.DATASET                             = edict()
 __C.DATASET.DATASET_TRAIN_NAME          = 'DIV2K'              # DIV2K
-# DIV2K_val, Set5, Set14, BSD100, Urban100, Manga109, Demo
+# DIV2K_val, Set5, Set14, BSDS100, Urban100, Manga109, Demo
 __C.DATASET.DATASET_TEST_NAME           = 'DIV2K_val'
 
 #
@@ -40,7 +40,7 @@ __C.DIR.DATASET_SCALE                   = 'x'+ str(__C.CONST.SCALE)
 
 
 # For DIV2K
-__C.DIR.DATASET_ROOT = '/mnt/lustre/sczhou/datasets/'
+__C.DIR.DATASET_ROOT = '/data/xiongjianyu/datasets/'
 if cfg.DATASET.DATASET_TRAIN_NAME == 'DIV2K':
     __C.DIR.DATASET_JSON_TRAIN_PATH     = './datasets/json_files/DIV2K.json'
     __C.DIR.IMAGE_LR_TRAIN_PATH         = __C.DIR.DATASET_ROOT + 'DIV2K/DIV2K_{0}_LR_bicubic_sub/'+__C.DIR.DATASET_SCALE+'/{1}.png'
@@ -50,13 +50,13 @@ if cfg.DATASET.DATASET_TRAIN_NAME == 'DIV2K':
 # For DIV2K validation
 if cfg.DATASET.DATASET_TEST_NAME == 'DIV2K_val':
     __C.DIR.DATASET_JSON_TEST_PATH      = './datasets/json_files/DIV2K_val.json'
-    __C.DIR.IMAGE_LR_TEST_PATH          = __C.DIR.DATASET_ROOT + 'DIV2K/DIV2K_{0}_LR_bicubic/'+__C.DIR.DATASET_SCALE+'/{1}.png'
+    __C.DIR.IMAGE_LR_TEST_PATH          = __C.DIR.DATASET_ROOT + 'DIV2K/DIV2K_{0}_LR_bicubic/'+__C.DIR.DATASET_SCALE+'/{1}' + __C.DIR.DATASET_SCALE + '.png'
     __C.DIR.IMAGE_HR_TEST_PATH          = __C.DIR.DATASET_ROOT + 'DIV2K/DIV2K_{0}_HR/{1}.png'
 
-# For Set5, Set14, BSD100, Urban100, Manga109
-if cfg.DATASET.DATASET_TEST_NAME in ['Set5', 'Set14', 'BSD100', 'Urban100', 'Manga109']:
+# For Set5, Set14, BSDS100, Urban100, Manga109
+if cfg.DATASET.DATASET_TEST_NAME in ['Set5', 'Set14', 'BSDS100', 'Urban100', 'Manga109']:
     __C.DIR.DATASET_JSON_TEST_PATH      = './datasets/json_files/'+__C.DATASET.DATASET_TEST_NAME+'.json'
-    __C.DIR.IMAGE_LR_TEST_PATH          = __C.DIR.DATASET_ROOT + __C.DATASET.DATASET_TEST_NAME + '/LR/'+__C.DIR.DATASET_SCALE+'/{1}.png'
+    __C.DIR.IMAGE_LR_TEST_PATH          = __C.DIR.DATASET_ROOT + __C.DATASET.DATASET_TEST_NAME + '/LR/'+__C.DIR.DATASET_SCALE+'/{1}' + __C.DIR.DATASET_SCALE + '.png'
     __C.DIR.IMAGE_HR_TEST_PATH          = __C.DIR.DATASET_ROOT + __C.DATASET.DATASET_TEST_NAME + '/HR/'+__C.DIR.DATASET_SCALE+'/{1}.png'
 
 # For Test images

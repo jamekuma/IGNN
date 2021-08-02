@@ -10,73 +10,73 @@ from PIL import Image
 sys.path.append(osp.dirname(osp.dirname(osp.abspath(__file__))))
 from shutil import get_terminal_size
 def main():
-	mode = 'pair'  # single (one input folder) | pair (extract corresponding GT and LR pairs)
-	opt = {}
-	opt['n_thread'] = 20
-	opt['compression_level'] = 3  # 3 is the default value in cv2
-	# CV_IMWRITE_PNG_COMPRESSION from 0 to 9. A higher value means a smaller size and longer
-	# compression time. If read raw images during training, use 0 for faster IO speed.
-	if mode == 'single':
-		opt['input_folder'] = './DIV2K/DIV2K_train_HR'
-		opt['save_folder'] = './DIV2K/DIV2K_train_HR_sub'
-		opt['crop_sz'] = 480  # the size of each sub-image
-		opt['step'] = 240  # step of the sliding crop window
-		opt['thres_sz'] = 48  # size threshold
-		extract_single(opt)
-	elif mode == 'pair':
-		GT_folder = './DIV2K/DIV2K_train_HR'
-		save_GT_folder = './DIV2K/DIV2K_train_HR_sub/'
+    mode = 'pair'  # single (one input folder) | pair (extract corresponding GT and LR pairs)
+    opt = {}
+    opt['n_thread'] = 20
+    opt['compression_level'] = 3  # 3 is the default value in cv2
+    # CV_IMWRITE_PNG_COMPRESSION from 0 to 9. A higher value means a smaller size and longer
+    # compression time. If read raw images during training, use 0 for faster IO speed.
+    if mode == 'single':
+        opt['input_folder'] = '/data/xiongjianyu/datasets/DIV2K/DIV2K_train_HR'
+        opt['save_folder'] = '/data/xiongjianyu/datasets/DIV2K/DIV2K_train_HR_sub'
+        opt['crop_sz'] = 480  # the size of each sub-image
+        opt['step'] = 240  # step of the sliding crop window
+        opt['thres_sz'] = 48  # size threshold
+        extract_single(opt)
+    elif mode == 'pair':
+        GT_folder = '/data/xiongjianyu/datasets/DIV2K/DIV2K_train_HR'
+        save_GT_folder = '/data/xiongjianyu/datasets/DIV2K/DIV2K_train_HR_sub'
 
-		crop_sz = 480  # the size of each sub-image (GT)
-		step = 240  # step of the sliding crop window (GT)
-		thres_sz = 48  # size threshold
+        crop_sz = 480  # the size of each sub-image (GT)
+        step = 240  # step of the sliding crop window (GT)
+        thres_sz = 48  # size threshold
 
-		print('process GT...')
-		opt['input_folder'] = GT_folder
-		opt['save_folder'] = save_GT_folder
-		opt['crop_sz'] = crop_sz
-		opt['step'] = step
-		opt['thres_sz'] = thres_sz
-		extract_single(opt)
-		print('process LR...')
-		scale_ratio_list = [2,3,4]
-		
-		for scale_ratio in scale_ratio_list:
-			print('process LR-X'+str(scale_ratio)+'...')
-			LR_folder = './DIV2K/DIV2K_train_LR_bicubic/x'+str(scale_ratio)
-			save_LR_folder = './DIV2K/DIV2K_train_LR_bicubic_sub/x'+str(scale_ratio)
-			###########################################################################################################
-			# check that all the GT and LR images have correct scale ratio
-			img_GT_list = _get_paths_from_images(GT_folder)
-			img_LR_list = _get_paths_from_images(LR_folder)
-			assert len(img_GT_list) == len(img_LR_list), 'different length of GT_folder and LR_folder.'
-			for path_GT, path_LR in zip(img_GT_list, img_LR_list):
-				img_GT = Image.open(path_GT)
-				img_LR = Image.open(path_LR)
-				w_GT, h_GT = img_GT.size
-				w_LR, h_LR = img_LR.size
-				assert w_GT / w_LR == scale_ratio, 'GT width [{:d}] is not {:d}X as LR weight [{:d}] for {:s}.'.format( 
-					w_GT, scale_ratio, w_LR, path_GT)
-				assert w_GT / w_LR == scale_ratio, 'GT width [{:d}] is not {:d}X as LR weight [{:d}] for {:s}.'.format( 
-					w_GT, scale_ratio, w_LR, path_GT)
+        # print('process GT...')
+        # opt['input_folder'] = GT_folder
+        # opt['save_folder'] = save_GT_folder
+        # opt['crop_sz'] = crop_sz
+        # opt['step'] = step
+        # opt['thres_sz'] = thres_sz
+        # extract_single(opt)
+        print('process LR...')
+        scale_ratio_list = [2,3,4]
+        
+        for scale_ratio in scale_ratio_list:
+            print('process LR-X'+str(scale_ratio)+'...')
+            LR_folder = '/data/xiongjianyu/datasets/DIV2K/DIV2K_train_LR_bicubic/x'+str(scale_ratio)
+            save_LR_folder = '/data/xiongjianyu/datasets/DIV2K/DIV2K_train_LR_bicubic_sub/x'+str(scale_ratio)
+            ###########################################################################################################
+            # check that all the GT and LR images have correct scale ratio
+            img_GT_list = _get_paths_from_images(GT_folder)
+            img_LR_list = _get_paths_from_images(LR_folder)
+            assert len(img_GT_list) == len(img_LR_list), 'different length of GT_folder and LR_folder.'
+            for path_GT, path_LR in zip(img_GT_list, img_LR_list):
+                img_GT = Image.open(path_GT)
+                img_LR = Image.open(path_LR)
+                w_GT, h_GT = img_GT.size
+                w_LR, h_LR = img_LR.size
+                assert w_GT / w_LR == scale_ratio, 'GT width [{:d}] is not {:d}X as LR weight [{:d}] for {:s}.'.format( 
+                    w_GT, scale_ratio, w_LR, path_GT)
+                assert w_GT / w_LR == scale_ratio, 'GT width [{:d}] is not {:d}X as LR weight [{:d}] for {:s}.'.format( 
+                    w_GT, scale_ratio, w_LR, path_GT)
 
-			# check crop size, step and threshold size
-			assert crop_sz % scale_ratio == 0, 'crop size is not {:d}X multiplication.'.format(
-				scale_ratio)
-			assert step % scale_ratio == 0, 'step is not {:d}X multiplication.'.format(scale_ratio)
-			assert thres_sz % scale_ratio == 0, 'thres_sz is not {:d}X multiplication.'.format(
-				scale_ratio)
+            # check crop size, step and threshold size
+            assert crop_sz % scale_ratio == 0, 'crop size is not {:d}X multiplication.'.format(
+                scale_ratio)
+            assert step % scale_ratio == 0, 'step is not {:d}X multiplication.'.format(scale_ratio)
+            assert thres_sz % scale_ratio == 0, 'thres_sz is not {:d}X multiplication.'.format(scale_ratio)
 
-			opt['input_folder'] = LR_folder
-			opt['save_folder'] = save_LR_folder
-			opt['crop_sz'] = crop_sz // scale_ratio
-			opt['step'] = step // scale_ratio
-			opt['thres_sz'] = thres_sz // scale_ratio
-			extract_single(opt)
-			assert len(_get_paths_from_images(save_GT_folder)) == len(
-				_get_paths_from_images(save_LR_folder)), 'different length of save_GT_folder and save_LR_folder.'
-	else:
-		raise ValueError('Wrong mode.')
+            opt['scale'] = scale_ratio
+            opt['input_folder'] = LR_folder
+            opt['save_folder'] = save_LR_folder
+            opt['crop_sz'] = crop_sz // scale_ratio
+            opt['step'] = step // scale_ratio
+            opt['thres_sz'] = thres_sz // scale_ratio
+            extract_single(opt)
+            assert len(_get_paths_from_images(save_GT_folder)) == len(
+                _get_paths_from_images(save_LR_folder)), 'different length of save_GT_folder and save_LR_folder.'
+    else:
+        raise ValueError('Wrong mode.')
 
 #######################################################################################################################
 def extract_single(opt):
@@ -134,7 +134,7 @@ def worker(path, opt):
             crop_img = np.ascontiguousarray(crop_img)
             cv2.imwrite(
                 osp.join(opt['save_folder'],
-                         img_name.replace('.png', '_s{:03d}.png'.format(index))), crop_img,
+                         img_name.replace('x{:d}.png'.format(opt['scale']), '_s{:03d}.png'.format(index))), crop_img,
                 [cv2.IMWRITE_PNG_COMPRESSION, opt['compression_level']])
     return 'Processing {:s} ...'.format(img_name)
 

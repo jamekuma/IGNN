@@ -2,7 +2,7 @@ function prepare_TEST_datasets()
 % For Bicubic degradation
 clear all; close all; clc
 path_original = './';
-datasets  = {'Set5', 'Set14', 'BSD100', 'Urban100', 'Manga109'};
+datasets  = {'Set5', 'Set14', 'BSDS100', 'Urban100', 'Manga109'};
 output = 'datasets';
 ext = {'*.jpg', '*.png', '*.bmp'};
 

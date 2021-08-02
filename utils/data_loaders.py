@@ -161,7 +161,7 @@ DATASET_LOADER_MAPPING = {
     'DIV2K_val': SRDataLoader,
     'Set5': SRDataLoader,
     'Set14': SRDataLoader,
-    'BSD100': SRDataLoader,
+    'BSDS100': SRDataLoader,
     'Urban100': SRDataLoader,
     'Manga109': SRDataLoader,
     'Demo': TestDataLoader

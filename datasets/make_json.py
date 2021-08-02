@@ -4,7 +4,7 @@ import io
 import numpy as np
 
 
-# For DIV2K, Set5, Set14, BSD100, Urban100, Manga109
+# For DIV2K, Set5, Set14, BSDS100, Urban100, Manga109
 file = io.open('div2k.json','w',encoding='utf-8')
 samples = []
 
