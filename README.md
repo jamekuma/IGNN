@@ -82,6 +82,8 @@ python runner.py \
         --out [output path]
 ```
 
+https://blog.csdn.net/weixin_42280271/article/details/114581249
+
 Use the following command to test the network on your demo images (w/o GT):
 ```
 python runner.py \
@@ -130,4 +132,13 @@ We are glad to hear from you. If you have any questions, please feel free to con
 This project is open sourced under MIT license.
 
 
-python runner.py --gpu 0 --phase 'train' --scale 4 --dataroot /data/xiongjianyu/datasets --out ./experiment
+python runner.py --gpu 0 --phase 'train' --scale 4 --dataroot /data/xiongjianyu/datasets/ --out ./experiment
+
+python runner.py \
+        --phase test \
+        --weights ./experiment/x2/tb_log/2021-08-02T12:41:09.255663_IGNN/checkpoints/best-ckpt.pth \
+        --scale 2 \
+        --dataroot /data/xiongjianyu/datasets/ \
+        --testname Set5 \
+        --out ./results/ \
+        --gpu 0
