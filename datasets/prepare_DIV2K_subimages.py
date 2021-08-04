@@ -31,13 +31,13 @@ def main():
         step = 240  # step of the sliding crop window (GT)
         thres_sz = 48  # size threshold
 
-        # print('process GT...')
-        # opt['input_folder'] = GT_folder
-        # opt['save_folder'] = save_GT_folder
-        # opt['crop_sz'] = crop_sz
-        # opt['step'] = step
-        # opt['thres_sz'] = thres_sz
-        # extract_single(opt)
+        print('process GT...')
+        opt['input_folder'] = GT_folder
+        opt['save_folder'] = save_GT_folder
+        opt['crop_sz'] = crop_sz
+        opt['step'] = step
+        opt['thres_sz'] = thres_sz
+        extract_single(opt)
         print('process LR...')
         scale_ratio_list = [2,3,4]
         
