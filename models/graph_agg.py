@@ -32,7 +32,6 @@ def compute_distances(xe, ye, I, train=True):
     # I  -> b m o
     b,n,e = xe.shape
     m = ye.shape[1]
-
     if train or not cfg.NETWORK.WITH_WINDOW:
         # D_full -> b m n
         D = ops.euclidean_distance(ye, xe.permute(0,2,1))
