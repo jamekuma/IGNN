@@ -79,6 +79,9 @@ def main():
     # Set GPU to use
     print('Using GPUs NUMBER: '+ str(cfg.CONST.NUM_GPU))
 
+    # set torch home
+    os.environ['TORCH_HOME'] = './.cache'
+
     # Setup Network & Start train/test process
     bulid_net(cfg)
 
