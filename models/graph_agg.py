@@ -292,10 +292,10 @@ def index_neighbours(xe_patch, ye_patch, window_size, scale):
 
     b,_,_,_,n1,n2 = xe_patch.shape
     s = window_size
-    
-    if s>=n1 and s>=n2: 
-        cfg.NETWORK.WITH_WINDOW = False
-        return None
+    # if s>=n1 and s>=n2: 
+    #     cfg.NETWORK.WITH_WINDOW = False
+    #     print('cfg.NETWORK.WITH_WINDOW = False !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    #     return None
 
     s = min(min(s, n1), n2)
     o = s**2

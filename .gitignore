@@ -108,7 +108,7 @@ ENV/
 /experiment/*
 /results/*
 /result/*
-
+result*
 # Checkpoints
 # ckpt/
 

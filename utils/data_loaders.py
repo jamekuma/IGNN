@@ -36,6 +36,8 @@ class SRDataset(torch.utils.data.dataset.Dataset):
     def __getitem__(self, idx):
         img_name, img_lr, img_hr = self.image_read(idx)
         img_lr, img_hr = self.transforms(img_lr, img_hr)
+        _,h,w = img_hr.size()
+        img_hr = img_hr[:,:int(h-h%self.down_scale), :int(w-w%self.down_scale)]  # for odd size, eg: Set14
         _,h,w = img_lr.size()
         img_lr_ = img_lr[:,:int(h-h%self.down_scale), :int(w-w%self.down_scale)] 
         img_lr_s = imresize(img_lr_/255.0, 1.0/self.down_scale)*255

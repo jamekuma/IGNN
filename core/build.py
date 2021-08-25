@@ -15,7 +15,8 @@ import utils.network_utils as net_utils
 import models
 from models.IGNN import IGNN
 
-from torch.utils.tensorboard import SummaryWriter
+# from torch.utils.tensorboard import SummaryWriter
+from tensorboardX import SummaryWriter
 from core.train import train
 from core.test import test
 from core.test_woGT import test_woGT
