@@ -107,10 +107,10 @@ def test(cfg, test_data_loader, net, Best_Epoch):
     sys.stdout = result_file
     print('[TEST] DATASET: ' + cfg.DATASET.DATASET_TEST_NAME)
     print('[TEST] Sample Number: ' + str(len(test_results['name'])))
-    print('[TEST] Average PSNR: %.3f' % PSNRs.avg)
-    print('[TEST] Average SSIM: %.3f' % SSIMs.avg)
+    print('[TEST] Average PSNR: %.5f' % PSNRs.avg)
+    print('[TEST] Average SSIM: %.5f' % SSIMs.avg)
     for i, name in enumerate(test_results['name']):
-        print('[TEST]\t PSNR: %.3f \t SSIM: %.3f \t Name: %s' % 
+        print('[TEST]\t PSNR: %.5f \t SSIM: %.5f \t Name: %s' % 
             (test_results['psnr'][i], test_results['ssim'][i], name))
     result_file.close()
 
