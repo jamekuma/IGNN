@@ -103,7 +103,7 @@ def bulid_net(cfg):
         # Set up learning rate scheduler to decay learning rates dynamically
         # lr_scheduler = torch.optim.lr_scheduler.MultiStepLR(solver, milestones=cfg.TRAIN.LR_MILESTONES,
         #                                                                     gamma=cfg.TRAIN.LR_DECAY)
-        lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(solver)
+        lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(solver, T_0=32, T_mult=2)
         # Summary writer for TensorBoard
         output_dir = os.path.join(cfg.DIR.OUT_PATH,'tb_log', dt.now().isoformat()+'_'+cfg.NETWORK.SRNETARCH, '%s')
         log_dir      = output_dir % 'logs'
